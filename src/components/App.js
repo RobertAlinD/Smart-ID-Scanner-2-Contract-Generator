@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import IDScanner from './IDScanner';
-import extractDataFromImage from './extractDataFromImage';
-import { Box, Input, Text, Button, VStack } from '@chakra-ui/react';
+import extractDataFromImage from './ocrService';
+import { Box, Input, Text } from '@chakra-ui/react';
 
 function App() {
   const [rawText, setRawText] = useState('');
   const [capturedImage, setCapturedImage] = useState('');
 
   const handleImageCapture = async (image) => {
-    setCapturedImage(image); // Salvează imaginea capturată
+    setCapturedImage(image);
     try {
       const result = await extractDataFromImage(image);
-      setRawText(result.rawText || 'Informație lipsă');
+      setRawText(result.ParsedText || 'Informație lipsă');
     } catch (error) {
       console.error("Eroare la capturarea imaginii sau extragerea datelor: ", error);
       setRawText('Eroare la recunoașterea textului.');
@@ -21,17 +21,12 @@ function App() {
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      try {
-        const reader = new FileReader();
-        reader.onloadend = async () => {
-          const image = reader.result;
-          await handleImageCapture(image);
-        };
-        reader.readAsDataURL(file);
-      } catch (error) {
-        console.error("Eroare la încărcarea fișierului: ", error);
-        setRawText('Eroare la încărcarea fișierului.');
-      }
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result.replace(/^data:image\/[a-z]+;base64,/, '');
+        await handleImageCapture(base64String);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
