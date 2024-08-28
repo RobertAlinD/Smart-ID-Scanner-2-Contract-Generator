@@ -1,23 +1,111 @@
-/* src/App.css */
-.App {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 20px;
+/* Stiluri generale pentru aplicație */
+.app-container {
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: auto;
+  background-color: #f0f4f8;
 }
 
-h3 {
+/* Stil pentru butonul de upload imagine */
+.upload-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
   margin-top: 20px;
 }
 
-pre {
-  text-align: left;
-  margin: 20px auto;
+.upload-button:hover {
+  background-color: #0056b3;
+}
+
+/* Stil pentru containerul formularului */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+/* Stil pentru etichetele câmpurilor */
+.chakra-form__label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Stil pentru câmpurile de input */
+.chakra-input {
+  border-radius: 8px;
+  border: 1px solid #ccc;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #f9f9f9;
-  white-space: pre-wrap; /* Preserve new lines and spaces */
-  word-wrap: break-word; /* Handle long words */
+  font-size: 1rem;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.chakra-input:focus {
+  border-color: #3182ce;
+  outline: none;
+  box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
+}
+
+/* Stil pentru butoane */
+.chakra-button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Stil pentru butonul de submit */
+.submit-button {
+  background-color: #48bb78;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #38a169;
+  transform: translateY(-2px);
+}
+
+/* Stil pentru butonul de download */
+.download-button {
+  background-color: #3182ce;
+  color: white;
+}
+
+.download-button:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-2px);
+}
+
+/* Stiluri suplimentare pentru elemente CSS generate de Chakra UI */
+.css-1bb9cz5 {
+  margin-top: 10px !important;
+  width: 800px !important;
+  height: 400px !important;
 }
 
 
+.css-90j4rp {
+  display: grid !important;
+}
+.css-g6pte {
+  font-weight: 900 !important;
+  font-family: monospace !important;
+}

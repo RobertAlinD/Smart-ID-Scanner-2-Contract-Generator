@@ -1,69 +1,88 @@
 import React, { useState } from 'react';
-import IDScanner from './IDScanner';
+import { Box, Button, Input, Image, VStack, Heading } from '@chakra-ui/react';
+import AutoFormComplet from './autoFormComplet';
 import extractDataFromImage from './ocrService';
-import { Box, Input, Text } from '@chakra-ui/react';
+import '../App.css'; // Asigură-te că calea către fișierul CSS este corectă
 
 function App() {
-  const [rawText, setRawText] = useState('');
-  const [capturedImage, setCapturedImage] = useState('');
+  const [image, setImage] = useState(null);
+  const [data, setData] = useState({
+    nume: '',
+    prenume: '',
+    cnp: '',
+    cetatenie: '',
+    locNastere: '',
+    adresa: '',
+    seria: '',
+    nr: ''
+  });
 
-  const handleImageCapture = async (image) => {
-    setCapturedImage(image);
-    try {
-      const result = await extractDataFromImage(image);
-      setRawText(result.ParsedText || 'Informație lipsă');
-    } catch (error) {
-      console.error("Eroare la capturarea imaginii sau extragerea datelor: ", error);
-      setRawText('Eroare la recunoașterea textului.');
-    }
-  };
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
+  const handleImageCapture = async (e) => {
+    const file = e.target.files[0];
     if (file) {
+      setImage(URL.createObjectURL(file));
+
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64String = reader.result.replace(/^data:image\/[a-z]+;base64,/, '');
-        await handleImageCapture(base64String);
+        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+
+        // Extrage textul din imagine folosind API-ul OCR.Space
+        const result = await extractDataFromImage(base64String);
+        console.log("Extracted Text:", result.rawText);
+
+        setData(result.processedData); // Actualizează starea cu datele extrase
       };
       reader.readAsDataURL(file);
     }
   };
 
+  const handleSubmit = (values) => {
+    console.log("Submitted Values:", values);
+  };
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      width="100vw"
-      p={4}
-      bg="gray.50"
-    >
-      <IDScanner onImageCaptured={handleImageCapture} />
-      <Input
-        type="file"
-        accept="image/*"
-        onChange={handleFileUpload}
-        mt={4}
-        variant="outline"
-        width={{ base: 'full', sm: 'md' }}
-      />
-      <Box
-        mt={4}
-        p={4}
-        borderWidth={1}
-        borderRadius="md"
-        bg="white"
-        boxShadow="md"
-        width={{ base: 'full', sm: 'md' }}
-        textAlign="center"
-      >
-        <Text fontWeight="bold" fontSize="lg" mb={2}>Text extras:</Text>
-        <Text whiteSpace="pre-wrap">{rawText}</Text>
+    <VStack className="app-container" spacing={4}>
+      <Heading as="h1" size="xl" textAlign="center" mb={4}>
+     Smart ID Scanner 2 Contract Generator
+      </Heading>
+      
+      <Box textAlign="center">
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleImageCapture}
+          display="none"
+          id="file-upload"
+        />
+        <label htmlFor="file-upload">
+          <Button
+            as="span"
+            colorScheme="blue"
+            mb={4}
+            className="upload-button"
+          >
+            Upload Image
+          </Button>
+        </label>
+        {image && (
+          <Box mt={4} textAlign="center">
+            <Image
+              src={image}
+              alt="Preview"
+              boxSize="500px"
+              objectFit="contain"
+              borderWidth={1}
+              borderColor="gray.300"
+            />
+          </Box>
+        )}
       </Box>
-    </Box>
+      <AutoFormComplet
+        initialData={data}
+        onSubmit={handleSubmit}
+        className="form-container"
+      />
+    </VStack>
   );
 }
 

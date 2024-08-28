@@ -1,4 +1,3 @@
-// src/components/extractDataFromImage.js
 import Tesseract from 'tesseract.js';
 
 const extractDataFromImage = async (image) => {
@@ -10,7 +9,10 @@ const extractDataFromImage = async (image) => {
         logger: (m) => console.log(m), // opțional: urmărește progresul
       }
     );
-    
+
+    // Verifică textul extras
+    console.log("Extracted Text:", text);
+
     // Returnează atât textul extras cât și datele procesate
     return {
       rawText: text,
@@ -26,31 +28,32 @@ const extractDataFromImage = async (image) => {
         numar: 'Informație lipsă',
         nume: 'Informație lipsă',
         prenume: 'Informație lipsă',
-        nationalitate: 'Informație lipsă',
+        cetatenie: 'Informație lipsă',
         locNastere: 'Informație lipsă',
-        domiciliu: 'Informație lipsă'
+        adresa: 'Informație lipsă'
       }
     };
   }
 };
 
 const parseIdData = (text) => {
-  // Normalize the text
+  // Normalizează textul
   const cleanedText = text
-    .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
-    .replace(/[\n\r]+/g, ' ') // Replace newlines with a space
-    .replace(/[^a-zA-Z0-9\s\/\-:]+/g, '') // Remove unwanted characters, keeping alphanumeric, spaces, slashes, dashes, and colons
-    .toUpperCase(); // Convert to uppercase for consistency
+    .replace(/\s+/g, ' ') // Înlocuiește spațiile multiple cu un singur spațiu
+    .replace(/[\n\r]+/g, ' ') // Înlocuiește liniile noi cu un spațiu
+    .replace(/[^a-zA-Z0-9\s\/\-:]+/g, '') // Elimină caracterele nedorite
+    .toUpperCase(); // Convertă la majuscule pentru consistență
 
+  // Definește modele de căutare
   const patterns = {
-    serie: /SERIA\s*([A-Z]{2})/i, // Două litere mari
-    numar: /NR\s*(\d{1,6})/i, // Până la 6 cifre
-    cnp: /\b\d{13}\b/i, // CNP format din exact 13 cifre
-    nume: /Nume\/Nom\/Last name\s*:\s*([A-Z\s\-]+)/i, // Nume scris cu litere mari
-    prenume: /Prenume\/Prenom\/First name\s*:\s*([A-Z\s\-]+)/i, // Prenume scris cu litere mari
-    nationalitate: /Cetăţenie\/Nationalite\/Nationality\s*:\s*([A-Z\s\/]+)/i, // Naționalitate
-    locNastere: /Loc naștere\/Lieu de naissance\/Place of birth\s*:\s*([^\d]+)\d*/i, // Loc de naștere (până la prima cifră)
-    domiciliu: /Domiciliu\/Adresse\/Address\s*:\s*(.*)/i // Domiciliu
+    serie: /SERIA\s*([A-Z]{2})/i,
+    numar: /NR\s*(\d{1,6})/i,
+    cnp: /\b\d{13}\b/i,
+    nume: /Nume\/Nom\/Last name\s*:\s*([A-Z\s\-]+)/i,
+    prenume: /Prenume\/Prenom\/First name\s*:\s*([A-Z\s\-]+)/i,
+    cetatenie: /Cetăţenie\/Nationalite\/Nationality\s*:\s*([A-Z\s\/]+)/i,
+    locNastere: /Loc naștere\/Lieu de naissance\/Place of birth\s*:\s*([^\d]+)\d*/i,
+    adresa: /Domiciliu\/Adresse\/Address\s*:\s*(.*)/i
   };
 
   const matchedData = {};
