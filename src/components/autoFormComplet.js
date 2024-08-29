@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { FormLabel, Input, Button, VStack, Textarea, Center } from '@chakra-ui/react';
+import { FormLabel, Input, Button, VStack, Textarea } from '@chakra-ui/react';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { saveAs } from 'file-saver';
 
 const AutoFormComplet = ({ initialData }) => {
   const [contract, setContract] = useState('');
-  const [contractText, setContractText] = useState(''); // Stocăm versiunea text a contractului
+  const [contractText, setContractText] = useState('');
 
   const generateContract = (values) => {
     const contractTemplateText = `
@@ -27,9 +27,9 @@ const AutoFormComplet = ({ initialData }) => {
         new Paragraph({
             children: [new TextRun("Contract de Vânzare-Cumpărare Auto")],
             alignment: "center",
-            spacing: { after: 200 }, // Ajustează spațiul după titlu
+            spacing: { after: 200 },
             style: {
-                font: { size: 80 }, // Dimensiunea fontului pentru titlu
+                font: { size: 80 },
                 bold: true
             }
         }),
@@ -41,7 +41,7 @@ const AutoFormComplet = ({ initialData }) => {
             ],
             spacing: { before: 200, after: 200 },
             style: {
-                font: { size: 24 } // Dimensiunea fontului pentru textul normal
+                font: { size: 24 }
             }
         }),
         new Paragraph({
@@ -81,8 +81,8 @@ const AutoFormComplet = ({ initialData }) => {
     ];
 
     setContract(contractTemplateDocx);
-    setContractText(contractTemplateText.trim()); // Setează versiunea text
-};
+    setContractText(contractTemplateText.trim());
+  };
 
   const downloadDocxFile = () => {
     const doc = new Document({
@@ -133,13 +133,12 @@ const AutoFormComplet = ({ initialData }) => {
             </Button>
           </VStack>
 
-          {/* Afișarea contractului generat */}
           {contractText && (
             <VStack spacing={4} align="flex-start" mt={4} id="contract-generated">
               <FormLabel>Contract Generat:</FormLabel>
               <Textarea
                 value={contractText}
-                onChange={(e) => setContractText(e.target.value)} // Permite editarea
+                onChange={(e) => setContractText(e.target.value)}
                 height="500px"
               />
             </VStack>

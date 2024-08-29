@@ -15,10 +15,10 @@ async function extractDataFromImage(image) {
             },
         });
 
-        console.log('API Response:', response.data);  // Afișează răspunsul complet
+        console.log('API Response:', response.data);  
 
         if (response.data && response.data.ParsedResults && response.data.ParsedResults.length > 0) {
-            // Normalizează textul pentru a elimina diacriticele
+
             const text = removeDiacritics(response.data.ParsedResults[0].ParsedText || 'Nu s-a putut extrage textul din imagine.');
             return {
                 rawText: text,
@@ -45,7 +45,7 @@ async function extractDataFromImage(image) {
     }
 }
 
-// Functie pentru eliminarea diacriticelor
+
 function removeDiacritics(text) {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 }

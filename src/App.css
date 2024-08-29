@@ -1,4 +1,4 @@
-/* Stiluri generale pentru aplicație */
+
 .app-container {
   margin: 30px;
   display: flex;
@@ -10,7 +10,7 @@
   background-color: #f0f4f8;
 }
 
-/* Stil pentru butonul de upload imagine */
+
 .upload-button {
   background-color: #007bff;
   color: #ffffff;
@@ -26,7 +26,7 @@
   background-color: #0056b3;
 }
 
-/* Stil pentru containerul formularului */
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -40,14 +40,14 @@
   margin: auto;
 }
 
-/* Stil pentru etichetele câmpurilor */
+
 .chakra-form__label {
   font-size: 1rem;
   color: #333;
   font-weight: bold;
 }
 
-/* Stil pentru câmpurile de input */
+
 .chakra-input {
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -63,7 +63,7 @@
   box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
 }
 
-/* Stil pentru butoane */
+
 .chakra-button {
   padding: 10px 15px;
   border-radius: 8px;
@@ -72,7 +72,7 @@
   transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-/* Stil pentru butonul de submit */
+
 .submit-button {
   background-color: #48bb78;
   color: white;
@@ -83,7 +83,6 @@
   transform: translateY(-2px);
 }
 
-/* Stil pentru butonul de download */
 .download-button {
   background-color: #3182ce;
   color: white;
@@ -94,7 +93,6 @@
   transform: translateY(-2px);
 }
 
-/* Stiluri suplimentare pentru elemente CSS generate de Chakra UI */
 .css-1bb9cz5 {
   margin-top: 10px !important;
   width: 800px !important;

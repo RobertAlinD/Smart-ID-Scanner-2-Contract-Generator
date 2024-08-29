@@ -4,16 +4,16 @@ const extractDataFromImage = async (image) => {
   try {
     const { data: { text } } = await Tesseract.recognize(
       image,
-      'ron+eng+fra', // Limba română, engleză și franceză
+      'ron+eng+fra',
       {
-        logger: (m) => console.log(m), // opțional: urmărește progresul
+        logger: (m) => console.log(m),
       }
     );
 
-    // Verifică textul extras
+   
     console.log("Extracted Text:", text);
 
-    // Returnează atât textul extras cât și datele procesate
+    
     return {
       rawText: text,
       processedData: parseIdData(text)
@@ -37,14 +37,12 @@ const extractDataFromImage = async (image) => {
 };
 
 const parseIdData = (text) => {
-  // Normalizează textul
   const cleanedText = text
-    .replace(/\s+/g, ' ') // Înlocuiește spațiile multiple cu un singur spațiu
-    .replace(/[\n\r]+/g, ' ') // Înlocuiește liniile noi cu un spațiu
-    .replace(/[^a-zA-Z0-9\s\/\-:]+/g, '') // Elimină caracterele nedorite
-    .toUpperCase(); // Convertă la majuscule pentru consistență
+    .replace(/\s+/g, ' ') 
+    .replace(/[\n\r]+/g, ' ') 
+    .replace(/[^a-zA-Z0-9\s\/\-:]+/g, '') 
+    .toUpperCase(); 
 
-  // Definește modele de căutare
   const patterns = {
     serie: /SERIA\s*([A-Z]{2})/i,
     numar: /NR\s*(\d{1,6})/i,

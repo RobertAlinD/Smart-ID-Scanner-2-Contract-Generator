@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Input, Image, VStack, Heading } from '@chakra-ui/react';
 import AutoFormComplet from './autoFormComplet';
 import extractDataFromImage from './ocrService';
-import '../App.css'; // Asigură-te că calea către fișierul CSS este corectă
+import '../App.css'; 
 
 function App() {
   const [image, setImage] = useState(null);
@@ -25,12 +25,9 @@ function App() {
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-
-        // Extrage textul din imagine folosind API-ul OCR.Space
         const result = await extractDataFromImage(base64String);
         console.log("Extracted Text:", result.rawText);
-
-        setData(result.processedData); // Actualizează starea cu datele extrase
+        setData(result.processedData);
       };
       reader.readAsDataURL(file);
     }
@@ -43,7 +40,7 @@ function App() {
   return (
     <VStack className="app-container" spacing={4}>
       <Heading as="h1" size="xl" textAlign="center" mb={4}>
-     Smart ID Scanner 2 Contract Generator
+        Smart ID Scanner 2 Contract Generator
       </Heading>
       
       <Box textAlign="center">
