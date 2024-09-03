@@ -58,13 +58,13 @@ const parseIdData = (text) => {
         .toUpperCase();
 
     const patterns = {
-        seria: /\bTZ\s*([A-Z]{2})\b/i,
-        nr: /\bNR\s*(\d{1,6})\b/i,
-        cnp: /\bCNP\s*(\d{13})\b/i,
+        seria: /SERIA\s*([A-Z]{2})\b/,
+        nr: /\s*(\d{6})\b/i,
+        cnp: /\b(\d{13})\b/i,
         nume: /NUME\/NOM\/LAST NAME\s*([A-ZĂÂÎȘȚÅÄ]+)/i,
         prenume: /PRENUME\/PRENOM\/FIRST NAME\s*([A-ZĂÂÎȘȚÅÄ\-]+)/i,
-        cetatenie: /Cetatenie\/Natlonalite\/Nationality\s*([A-ZĂÂÎȘȚÅÄä\s]+)\s*\/\s*([A-Z]{3})/i,
-        locNastere: /Loc nastere\/Lieu de naissance\/Place of birth\s*(Jud|Mun|Ors)\.([A-Z]{2})\s*(Mun|Ors)?\.([A-Z][a-z]+)/i,
+        cetatenie: /ty\s*([A-ZĂÂÎȘȚÅÄä\s]+)\s*\/\s*([A-Z]{3})/i,
+        locNastere: /\b(Jud|Ors)\.([A-ZĂÂÎȘȚÅÄ][A-ZĂÂÎȘȚÅÄ]*)\b/i,
         adresa: /DOMICILIU\/ADRESSE\/ADDRESS\s*([\wăâîșțåä\s\.]+?(?=\s*(?:SEX|EMIS|VALABILITATE|ID|$)))/i,
     };
 
@@ -76,7 +76,7 @@ const parseIdData = (text) => {
             ? `${cleanedText.match(patterns.cetatenie)[1]} / ${cleanedText.match(patterns.cetatenie)[2]}`
             : 'Completează câmpul manual',
         locNastere: cleanedText.match(patterns.locNastere)
-            ? `Jud.${cleanedText.match(patterns.locNastere)[2]} Mun.${cleanedText.match(patterns.locNastere)[4]}`
+            ? `Jud.${cleanedText.match(patterns.locNastere)[2]}`
             : 'Completează câmpul manual',
         adresa: cleanedText.match(patterns.adresa)?.[1] || 'Completează câmpul manual',
         seria: cleanedText.match(patterns.seria)?.[1] || 'Completează câmpul manual',
